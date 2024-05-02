@@ -14,7 +14,7 @@
       > - ~~https://github.com/unitreerobotics/unitree_ros2_to_real~~ (deprecated)
       > - ~~https://github.com/unitreerobotics/unitree_legged_sdk/tree/go1~~ (deprecated)
       > - https://github.com/katie-hughes/unitree_ros2 (replace the previous 2 links)
-      > - ~~https://github.com/lcm-proj/lcm/releases~~ (Not needed anymore)
+      > - ~~https://github.com/lcm-proj/lcm/releases~~ (Not needed anymore with 3.8.0+)
 
 - Crazyflies :
   - https://github.com/IMRCLab/crazyswarm2
@@ -29,6 +29,8 @@
   > (Then choose java-8-openjdk option)
 
 ### GO1
+- **https://github.com/katie-hughes/unitree_ros2**
+
 - [**unitree_ros2_to_real**](https://github.com/unitreerobotics/unitree_ros2_to_real)
 - [**unitree_legged_sdk**](https://github.com/unitreerobotics/unitree_legged_sdk/tree/go1)
   - [Unitree](https://www.unitree.com/download) 
