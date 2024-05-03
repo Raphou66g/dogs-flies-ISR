@@ -2,10 +2,10 @@
 
 ## Sources
 
-| | System | ROS 2 | Python |
-| ------- | ------- | ------- | ------ |
-| GO1 | Ubuntu 22.04 | Humble | / |
-| Crazyflies | Ubuntu 22.04 | Humble | 3.10 |
+| System | ROS 2 | Python |
+| ------- | ------- | ------ |
+| Ubuntu 22.04 | Humble | 3.10 |
+
 
 - GO1 :
   - https://www.youtube.com/watch?v=YSedTUxI0wc&ab_channel=DroneBlocks
@@ -31,7 +31,7 @@
   > (Then choose java-8-openjdk option)
 
 ### GO1
-- **https://github.com/katie-hughes/unitree_ros2**
+- **https://github.com/katie-hughes/unitree_ros2** (this link provide everything we need. The next 2 are there just in case to remind us what this fork contain)
 
 - [**unitree_ros2_to_real**](https://github.com/unitreerobotics/unitree_ros2_to_real)
 - [**unitree_legged_sdk**](https://github.com/unitreerobotics/unitree_legged_sdk/tree/f3b318a691e744e28caf6787eec90288f4016e87)
