@@ -1,6 +1,6 @@
 # drone-flies-ISR
 
-- [📰 Source](#sources)
+- [📰 Sources](#sources)
 - [🛠️ Dependencies](#dependencies)
   - [General](#dependencies-general)
   - [🐕 Go1](#dependencies-go1)
@@ -9,16 +9,15 @@
 ## 📰 Sources <a id="sources"></a>
 
 - GO1 :
-  - [] https://www.youtube.com/watch?v=YSedTUxI0wc&ab_channel=DroneBlocks
+  - [x] **https://github.com/snt-arg/unitree_ros** (The most recent depot working extremly well. We'll base our work on this)
+  - [ ] https://www.youtube.com/watch?v=YSedTUxI0wc&ab_channel=DroneBlocks
     - https://gist.github.com/dbaldwin/feb0d279c67e0bcb191d2b366f867a84
     - https://community.droneblocks.io/t/go1-development-with-ros2-c-and-python/679/4
       > - https://github.com/katie-hughes/unitree_ros2 (replace the next 2 links)
       > - https://github.com/unitreerobotics/unitree_ros2_to_real
       > - https://github.com/unitreerobotics/unitree_legged_sdk/tree/f3b318a691e744e28caf6787eec90288f4016e87 [^1] 
-      > - https://github.com/lcm-proj/lcm/releases (Not needed anymore with unitree_legged_sdk 3.8.0+)
+      > - https://github.com/lcm-proj/lcm/releases (Not needed anymore only if using unitree_legged_sdk 3.8.0+)
 
-  - [x] **https://github.com/snt-arg/unitree_ros** 
-  (The most recent depot working extremly well. We'll base our work on this)
 
 [^1]: https://github.com/unitreerobotics/unitree_legged_sdk/tree/go1 is the most recent version
 
