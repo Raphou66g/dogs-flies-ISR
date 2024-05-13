@@ -25,7 +25,7 @@ class TrajectoryFollower(Node):
             #(3.5, 0.0),
             #(3.5,9.2),
             #(0.0,9.2),
-            (0.0,0.0)
+            (2.0,0.0)
         ]
         
         self.current_waypoint = 0

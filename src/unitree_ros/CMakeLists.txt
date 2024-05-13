@@ -112,5 +112,8 @@ install(TARGETS
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/utils/faceLightSDK_Nano/lib/libfaceLight_SDK_${ARCH}.so
         DESTINATION lib)
-
+install(PROGRAMS
+  scripts/DriverNode.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 ament_package()
