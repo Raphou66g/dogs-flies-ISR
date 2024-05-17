@@ -4,6 +4,7 @@
 - [🛠️ Dependencies](#dependencies)
   - [General](#dependencies-general)
   - [🐕 Go1](#dependencies-go1)
+    - [Jetson Nano & ZED mini](#jetson)
   - [🪰 Crazyflies](#dependencies-flies)
 - [⌨️ Initialization](#initialization)
 
@@ -47,6 +48,17 @@
 ### 🐕 GO1 <a id="dependencies-go1"></a>
 
 No specific dependencies other than the ones above.
+
+#### Jetson Nano & ZED mini <a id="jetson"></a>
+
+The GO1 cameras aren't the best ones for SLAM, we decided to use the ZED mini camera connected to a Jetson Nano wrap on his back.
+
+- Jetson's firmware.
+  - [Mega]() | Uploading...
+  - [Original Download Link](https://f000.backblazeb2.com/file/auvidea-download/images/Jetpack_4_6/BSP/Jetpack4.6_Nano_BSP.tar.gz)
+- ZED SDK
+  - [Mega]() | Uploading...
+  - [Original Download Link](https://download.stereolabs.com/zedsdk/4.1/l4t32.7/jetsons)
 
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
 
