@@ -54,10 +54,10 @@ No specific dependencies other than the ones above.
 The GO1 cameras aren't the best ones for SLAM, we decided to use the ZED mini camera connected to a Jetson Nano wrap on his back.
 
 - Jetson's firmware.
-  - [Mega]() | Uploading...
+  - [Mega](https://mega.nz/file/2YknhI6A#5s0Zr9UmwSfbIX-MFVpjSrUjrLEhWtQTiXN13qAWELM)
   - [Original Download Link](https://f000.backblazeb2.com/file/auvidea-download/images/Jetpack_4_6/BSP/Jetpack4.6_Nano_BSP.tar.gz)
 - ZED SDK
-  - [Mega]() | Uploading...
+  - [Mega](https://mega.nz/file/iQ8UnLiB#DffS4GR7SMCVJSmP2NdX7Ljpxegdke83Oy6cMzsJZ70)
   - [Original Download Link](https://download.stereolabs.com/zedsdk/4.1/l4t32.7/jetsons)
 
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
