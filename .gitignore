@@ -2,3 +2,6 @@
 build*/
 install*/
 log*/
+venv*/
+test*/
+.idea*/
