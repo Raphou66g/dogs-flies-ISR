@@ -76,7 +76,7 @@ For the Jetson Nano configuration, all these steps have been done on Ubuntu 18.0
 The entire processus can be found [here](./docs/Auvidea_Software.pdf)
 ⚠️ Warning ⚠️ : there's some error in this file but i'll provide you the correct step by step.
 
-- You first need to flash it.
+- You first need to flash it. *(SECTION 2 of the guide)*
 
   Starts by downloading the Jetson's firmware. It can be found above ([here](#jetson)).
 
@@ -90,7 +90,7 @@ The entire processus can be found [here](./docs/Auvidea_Software.pdf)
 
 - If your Jetson have an external storage like ours (SSD, SD card...), we recommand to use it and make it the boot system by following the "SECTION 5" on Auvidea's PDF. This section have some mistakes that i'll fix for you.
 
-  - Follow 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
+  - Follow SECTION 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
 
     In our case, it was `/dev/mmcblk1p1` so we removed the `p1` at the end and we got : 
     
@@ -155,8 +155,8 @@ The entire processus can be found [here](./docs/Auvidea_Software.pdf)
   ```bash
   sudo apt update
   ```
-
-  Auvidea <font color='red'>**DO NOT RECOMMAND**</font> upgrading your system, so we don't.
+> [!WARNING]
+> Auvidea **DO NOT RECOMMAND** upgrading your system, so we don't. Please refer to SECTION 2.5 for further information.
 
 ## ⌨️ Initialization <a id="initialization"></a>
 
