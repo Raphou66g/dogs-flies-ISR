@@ -52,44 +52,42 @@ No specific dependencies other than the ones above.
 
 #### Jetson Nano & ZED mini <a id="jetson"></a>
 
-The GO1 cameras aren't the best ones for SLAM, we decided to use the ZED mini camera connected to a Jetson Nano wrap on his back.
+The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo camera, which we connected to a Jetson Nano. The whole system will be wrapped on the Go1's back.
 
-- Jetson's firmware.
+- The JN30D carrier board's firmware :
   - [Mega](https://mega.nz/file/2YknhI6A#5s0Zr9UmwSfbIX-MFVpjSrUjrLEhWtQTiXN13qAWELM) | [Original Download Link](https://f000.backblazeb2.com/file/auvidea-download/images/Jetpack_4_6/BSP/Jetpack4.6_Nano_BSP.tar.gz)
-- ZED SDK
+- ZED SDK :
   - [Mega](https://mega.nz/file/HU1wSbxJ#px-IquGm5MQEqtKCeBQiUl40IVINUzJb41PFfCNexSk) | [Original Download Link](https://download.stereolabs.com/zedsdk/3.8/l4t32.6/jetsons)
 
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
 
 TBD
 
-## From Scratch <a id="scratch"></a>
+## From scratch <a id="scratch"></a>
 
 ### GO1
 
-Other peoples has been working with it and we don't know if they'd done something on his code. It must works too even after a factory reset.
+Other people have been working with the Go1 and we don't know if they have modified its code, but we suppose it should work properly even after a factory reset.
 
-### Jetson Nano
+### Flashing and configuring the Jetson Nano
 
-For the Jetson Nano configuration, all these steps have been done on Ubuntu 18.04. It should work with more recent versions but to avoid any problems we recommand using the same Ubuntu version.
+The following steps have been done on Ubuntu 18.04. It should work with more recent versions but to avoid any problems we recommend using the same Ubuntu version.
 
-The entire processus can be found [here](./docs/Auvidea_Software.pdf)
-⚠️ Warning ⚠️ : there's some error in this file but i'll provide you the correct step by step.
+The entire process can be found [here](./docs/Auvidea_Software.pdf). 
 
-- You first need to flash it.
+⚠️ Warning ⚠️ : There are mistakes in this file which we will address below.
 
-  Starts by downloading the Jetson's firmware. It can be found above ([here](#jetson)).
+- First, you need to flash the Jetson Nano.
 
-  Then connect your Jetson to your computer and run the downloaded file.
+  Download the Jetson's firmware. It can be found above ([here](#jetson)).
+
+  Then, setup your Jetson to be in recovery mode, connect it to your computer and then run the downloaded file.
 
   ```bash
   sudo bash ./flashcmd.txt
   ```
 
-  It could take some times.
-
-- If your Jetson have an external storage like ours (SSD, SD card...), we recommand to use it and make it the boot system by following the "SECTION 5" on Auvidea's PDF. This section have some mistakes that i'll fix for you.
-
+- If your Jetson have an external storage like ours (in our case, a microSD), we recommend to use it and make the Jetson boot on it by following the "SECTION 5" on Auvidea's PDF.
   - Follow 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
 
     In our case, it was `/dev/mmcblk1p1` so we removed the `p1` at the end and we got : 
@@ -112,32 +110,30 @@ The entire processus can be found [here](./docs/Auvidea_Software.pdf)
         sudo parted <YOUR_STORAGE_DEVICE> mkpart APP 0GB
         ```
 
-        When it ask for the end of the partition, simply input `100%`.
+        When parted asks for the end of the partition, input `100%` if you want to use the whole storage.
 
     3. Create filesystem
 
         ```bash
         sudo mkfs.ext4 <YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX>
         ```
-        without space between your variables.
+        with no space between your variables.
 
     4. Copy the existing RootFS to the storage device.
 
         ```bash
-        sudo mount <YOUR_STORAGE_DEVICE> /mnt
+        sudo mount <YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX> /mnt
         sudo rsync -axHAWX --numeric-ids --info=progress2 --exclude={"/dev/","/proc/","/sys/","/tmp/","/run/","/mnt/","/media/*","/lost+found"} / /mnt/
         ```
-  - Switch boot device to external device
+  - Switch boot device to the external device
 
     5. Modify the extlinux.conf by changing the root path
-
-        We are using `nano` but feel free to use your prefered editor.
 
         ```bash
         sudo nano /boot/extlinux/extlinux.conf
         ```
 
-        then locate the `LABEL primary` line and **ONLY** change the root path with `<YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX>` without space. Here's an exemple :
+        Then, locate the `LABEL primary` line and **ONLY** change the root path with `<YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX>` with no spaces :
 
         ```
         LABEL primary 
@@ -146,17 +142,20 @@ The entire processus can be found [here](./docs/Auvidea_Software.pdf)
           INITRD /boot/initrd 
           APPEND ${cbootargs} quiet root=<YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX> rw rootwait rootfstype=ext4 console=ttyTCU0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0
         ```
-  - Reboot and verify.
+  - Reboot the Jetson.
 
-    If every steps are done successfuly, you would be able to see <YOUR_STORAGE> as filesystem under the `df /` commande on your terminal.
+    If every step has been done correctly, while using `df` in a terminal, you should be able to see <YOUR_STORAGE> as your filesystem.
 
-- Time to update your Jetson.
+  Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
+  
+- You can then install the JetPack SDK :
 
   ```bash
   sudo apt update
+  sudo apt install nvidia-jetpack
   ```
 
-  Auvidea <font color='red'>**DO NOT RECOMMAND**</font> upgrading your system, so we don't.
+
 
 ## ⌨️ Initialization <a id="initialization"></a>
 
