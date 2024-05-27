@@ -87,8 +87,8 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
   sudo bash ./flashcmd.txt
   ```
 
-- If your Jetson have an external storage like ours (in our case, a microSD), we recommend to use it and make the Jetson boot on it by following the "SECTION 5" on Auvidea's PDF.
-  - Follow 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
+- If your Jetson has an external storage like ours (in our case, a microSD), we recommend to use it and make the Jetson boot on it by following the "SECTION 5" on Auvidea's PDF.
+  - Follow SECTION 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
 
     In our case, it was `/dev/mmcblk1p1` so we removed the `p1` at the end and we got : 
     
@@ -154,7 +154,6 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
   sudo apt update
   sudo apt install nvidia-jetpack
   ```
-
 
 
 ## ⌨️ Initialization <a id="initialization"></a>
