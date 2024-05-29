@@ -75,7 +75,8 @@ The following steps have been done on Ubuntu 18.04. It should work with more rec
 
 The entire process can be found [here](./docs/Auvidea_Software.pdf). 
 
-⚠️ Warning ⚠️ : There are mistakes in this file which we will address below.
+> [!WARNING]  
+> There are mistakes in this file which we will address below.
 
 - First, you need to flash the Jetson Nano.
 
@@ -90,11 +91,13 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 - If your Jetson has an external storage like ours (in our case, a microSD), we recommend to use it and make the Jetson boot on it by following the "SECTION 5" on Auvidea's PDF.
   - Follow SECTION 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
 
-    In our case, it was `/dev/mmcblk1p1` so we removed the `p1` at the end and we got : 
+    In our case, we got : 
     
-    <YOUR_STORAGE_DEVICE> = `/dev/mmcblk1`
+    **<YOUR_STORAGE>** = `/dev/mmcblk1p1`
+    
+    **<YOUR_STORAGE_DEVICE>** = `/dev/mmcblk1` (remove the `1` or `p1` or any number at the end)
 
-    <YOUR_STORAGE_PREFIX> = `p1`
+    **<YOUR_STORAGE_PREFIX>** = `p1` (or whatever you removed earlier)
 
   - Set up RootFS on SSD
 
@@ -115,14 +118,13 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
     3. Create filesystem
 
         ```bash
-        sudo mkfs.ext4 <YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX>
+        sudo mkfs.ext4 <YOUR_STORAGE>
         ```
-        with no space between your variables.
 
     4. Copy the existing RootFS to the storage device.
 
         ```bash
-        sudo mount <YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX> /mnt
+        sudo mount <YOUR_STORAGE> /mnt
         sudo rsync -axHAWX --numeric-ids --info=progress2 --exclude={"/dev/","/proc/","/sys/","/tmp/","/run/","/mnt/","/media/*","/lost+found"} / /mnt/
         ```
   - Switch boot device to the external device
@@ -133,21 +135,22 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
         sudo nano /boot/extlinux/extlinux.conf
         ```
 
-        Then, locate the `LABEL primary` line and **ONLY** change the root path with `<YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX>` with no spaces :
+        Then, locate the `LABEL primary` line and **ONLY** change the root path with `<YOUR_STORAGE>` :
 
         ```
         LABEL primary 
           MENU LABEL primary kernel
           LINUX /boot/Image
           INITRD /boot/initrd 
-          APPEND ${cbootargs} quiet root=<YOUR_STORAGE_DEVICE><YOUR_STORAGE_PREFIX> rw rootwait rootfstype=ext4 console=ttyTCU0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0
+          APPEND ${cbootargs} quiet root=<YOUR_STORAGE> rw rootwait rootfstype=ext4 console=ttyTCU0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0
         ```
   - Reboot the Jetson.
 
-    If every step has been done correctly, while using `df` in a terminal, you should be able to see <YOUR_STORAGE> as your filesystem.
+    If every step has been done correctly, while using `df /` in a terminal, you should be able to see <YOUR_STORAGE> as your filesystem.
 
-  Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
-  
+    Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
+
+
 - You can then install the JetPack SDK :
 
   ```bash
