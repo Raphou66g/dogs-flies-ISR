@@ -160,3 +160,14 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 
 - Place yourself in the `/drone-flies-ISR` folder.
 - `colcon build --symlink-install`
+- Power up the Unitree Go1.
+- If you can't wire your PC to the Go1 via Ethernet, connect the former to the 5GHz network named `Unitree_Go*******`. The default password is 00000000.
+- Then, input the following command to launch the driver :
+```bash
+ros2 launch unitree_ros unitree_driver_launch.py # add wifi:=true if using WiFi
+```
+- The Go1 should stand up. You can now send ROS2 nodes to it.
+- For example, test the following node, which should make the Go1 move forward by 2 meters : 
+```bash
+ros2 run unitree_ros DriverNode.py
+```
