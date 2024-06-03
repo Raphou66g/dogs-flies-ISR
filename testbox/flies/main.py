@@ -1,6 +1,6 @@
 import json
 
-from game_controller import GameController
+from environ_controller import GameController
 
 
 """

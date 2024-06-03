@@ -66,7 +66,7 @@ class DroneController:
         return self._land_now
 
     @position_to_visit.setter
-    def position_to_visit(self, position_to_visit):
+    def position_to_visit(self, position_to_visit:Position):
         # Add the offsets for all axis
         if position_to_visit:
             position_to_visit.x = position_to_visit.x + self.x_offset
