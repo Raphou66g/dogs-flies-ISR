@@ -21,4 +21,12 @@ def load_drones_settings():
 
 if __name__ == '__main__':
     drones = load_drones_settings()
-    GameController(drones).main()
+
+    print("Select an option :")
+    print("1. ROS mode")
+    print("2. Manual input mode")
+    opt = input("Option n° : ")
+
+    modes = {"1": 1, "2": 2}
+    mode = modes.get(opt, 0)
+    GameController(drones).main(mode=mode)

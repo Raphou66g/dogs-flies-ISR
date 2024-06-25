@@ -90,7 +90,7 @@ class DroneController:
     def drone_started(self, drone_started):
         self._drone_started = drone_started
 
-    def go_to_position(self, controller):
+    def go_to_position(self, controller:PositionHlCommander):
         """
         Sends the drone to a specific position if he gets a new position.
 
@@ -114,7 +114,7 @@ class DroneController:
         self.last_position_visited = self.position_to_visit
         self.position_to_visit = None
 
-    def back_to_origin(self, controller):
+    def back_to_origin(self, controller:PositionHlCommander):
         """
         Sends the drone back to the origin position.
 
@@ -124,7 +124,7 @@ class DroneController:
         controller.go_to(self.origin_x, self.origin_y, 0.5)
         time.sleep(self.SLEEP_AFTER_VISIT)
 
-    def start(self, scf):
+    def start(self, scf:SyncCrazyflie):
 
         """
         This is the drone's main loop where it waits for a new position to visit.

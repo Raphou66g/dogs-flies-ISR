@@ -4,7 +4,7 @@ class Position:
         self,
         x: float = 0,
         y: float = 0,
-        z: float = 0
+        z: float = 0.3
     ):
         """
         Class to represent a position. All args are converted to float.

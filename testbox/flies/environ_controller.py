@@ -1,3 +1,4 @@
+import sys, select
 import numpy as np
 
 from threading import Thread
@@ -17,6 +18,14 @@ from geometry_msgs.msg import (
     TwistWithCovariance,
     Vector3,
 )
+
+def is_number(s:str):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
 
 
 class MinimalSubscriber(Node):
@@ -145,11 +154,14 @@ class GameController:
 
         return coord
 
-    def main(self, args=None):
+    def main(self, mode:int=1, args=None):
         """
         TODO
         
         """
+
+        if mode == 0 :
+            return
 
         # ROS2 init
         rclpy.init(args=args)
@@ -159,10 +171,32 @@ class GameController:
 
         try:
             while True:
-                rclpy.spin_once(minimal_subscriber, timeout_sec=3)
+                if mode == 1:
+                    rclpy.spin_once(minimal_subscriber, timeout_sec=2)
+
+                    
+                else :
+                    print("enter X Y Z coords split with space. Floats allowed with . separator")
+                    print(f"Actual coordinates : {minimal_subscriber.pos}")
+                    i, _, _ = select.select( [sys.stdin], [], [], 10 )
+
+                    if (i):
+                        try:
+                            coords = sys.stdin.readline().strip().split(" ")
+                            if len(coords) != 3 :
+                                raise ValueError(f"Wrong number of parameters. Need exactly 3 and got {len(coords)}")
+                            for c in coords:
+                                if not is_number(c):
+                                    raise ValueError(f"{c} is not a valid number")
+                            minimal_subscriber.pos.x = float(coords[0])
+                            minimal_subscriber.pos.y = float(coords[1])
+                            minimal_subscriber.pos.z = float(coords[2])
+                        except Exception as e:
+                            print("Warning : " + e)
+                        
 
                 form_coords = self.formation(len(self.flyers), minimal_subscriber.pos)
-                # print([str(form_coords[i]) for i in range(len(form_coords))])
+                    # print([str(form_coords[i]) for i in range(len(form_coords))])
 
                 # Send drone to the position
                 for flyer, coord in zip(self.flyers, form_coords):
@@ -192,4 +226,4 @@ if __name__ == "__main__":
         return drones
     
     drones = load_drones_settings()
-    GameController(drones).main()
+    GameController(drones).main(mode=1)
