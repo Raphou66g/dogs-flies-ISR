@@ -50,11 +50,11 @@ class MinimalSubscriber(Node):
             pose.position.z,
         )
         self.orient = pose.orientation
-        twistWC: TwistWithCovariance = msg.twist
-        twist: Twist = twistWC.twist
-        self.twistL = twist.linear
-        self.twistA = twist.angular
-        print(self.pos, self.orient, self.twistL, self.twistA)
+        # twistWC: TwistWithCovariance = msg.twist
+        # twist: Twist = twistWC.twist
+        # self.twistL = twist.linear
+        # self.twistA = twist.angular
+        print(self.pos, self.orient) #, self.twistL, self.twistA)
 
 
 class GameController:
@@ -64,20 +64,10 @@ class GameController:
     :param flyers: (list) A list of dicts representing the drones (flyers).
     """
 
-    # Boundaries of the volleyball court
-    MAX_X = 1
-    MIN_X = -MAX_X
-
-    MAX_Y = 0.5
-    MIN_Y = -MAX_Y
-
-    MIN_Z = 0.4
-    MAX_Z = 1
-
-
-    def __init__(self, flyers):
+    def __init__(self, flyers:list[dict]):
         self.flyers = [DroneController(**flyer) for flyer in flyers]
         self.flyers_status = [False for _ in flyers]
+        self.threads:list[Thread] = []
 
     def start_drones(self):  # CORE
         """
@@ -85,7 +75,19 @@ class GameController:
         """
 
         for flyer in self.flyers:
-            Thread(target=flyer.main).start()
+            self.threads.append(Thread(target=flyer.main).start())
+
+    def alive_flyers(self):
+        trash:list[Thread] = []
+        count = 0
+        if len(self.threads) == 0:
+            return 0
+        for th in self.threads:
+            count+=1 if th.is_alive() else trash.append(th)
+        if not len(trash) == 0:
+            for th in trash:
+                self.threads.remove()
+        return count
 
     def stop_drones(self):  # CORE
         """
@@ -167,13 +169,16 @@ class GameController:
         rclpy.init(args=args)
         minimal_subscriber = MinimalSubscriber()
 
+        form_coords = self.formation(len(self.flyers), minimal_subscriber.pos)
+        for flyer, coord in zip(self.flyers, form_coords):
+            flyer.position_to_visit = coord
+
         self.start_drones()
 
         try:
             while True:
                 if mode == 1:
-                    rclpy.spin_once(minimal_subscriber, timeout_sec=2)
-
+                    rclpy.spin_once(minimal_subscriber, timeout_sec=0.1)
                     
                 else :
                     print("enter X Y Z coords split with space. Floats allowed with . separator")
@@ -195,7 +200,7 @@ class GameController:
                             print("Warning : " + e)
                         
 
-                form_coords = self.formation(len(self.flyers), minimal_subscriber.pos)
+                form_coords = self.formation(len(self.alive_flyers()), minimal_subscriber.pos)
                     # print([str(form_coords[i]) for i in range(len(form_coords))])
 
                 # Send drone to the position
