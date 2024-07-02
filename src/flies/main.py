@@ -1,4 +1,5 @@
 import json
+import os
 
 from environ_controller import EnvironController
 
@@ -14,12 +15,25 @@ def load_drones_settings():
 
     :return: List of dicts representing drone settings.
     """
-    with open('drones.json', 'r') as f:
+    with open(f"{os.path.dirname(__file__)}/drones.json", "r") as f:
         drones = json.load(f)
     return drones
-        
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
+    
+    while True:
+        print("")
+        print("1. Configure (install requirements)")
+        print("2. Skip")
+        st = input("Option n° : ")
+        states = {"1": 1, "2": 2}
+        state = states.get(st, 0)
+        if state != 0:
+            if state == 1:
+                from configure import install_all
+                install_all()
+            break
 
     drones = load_drones_settings()
 

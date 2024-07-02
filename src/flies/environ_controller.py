@@ -24,11 +24,10 @@ from geometry_msgs.msg import (
 def is_number(s: str):
     """_summary_
 
-    Args:
-        s (str): input String
+    :param s: (str) input String
 
-    Returns:
-        boolean: the String is an number or not
+    
+    :return: (boolean) the String is an number or not
     """
     try:
         float(s)
@@ -216,10 +215,8 @@ class EnvironController:
                         except Exception as e:
                             print("Warning : " + e)
 
-                form_coords = self.formation(
-                    len(self.alive_flyers()), minimal_subscriber.pos
-                )
-                # print([str(form_coords[i]) for i in range(len(form_coords))])
+                with self.lock:
+                    form_coords = self.formation(self.alive, minimal_subscriber.pos)
 
                 # Send drone to the position
                 for flyer, coord in zip(self.flyers, form_coords):
@@ -250,3 +247,4 @@ if __name__ == "__main__":
 
     drones = load_drones_settings()
     EnvironController(drones).main(mode=1)
+
