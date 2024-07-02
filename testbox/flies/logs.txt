@@ -1,0 +1,31 @@
+------------------------------
+
+
+[INFO] [1716974496.317151382] [minimal_subscriber]: I heard:
+nav_msgs.msg.Odometry(header=std_msgs.msg.Header(stamp=builtin_interfaces.msg.Time(sec=1716974496, nanosec=311195487), frame_id='odom'), child_frame_id='base_link', pose=geometry_msgs.msg.PoseWithCovariance(pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.5782625675201416, y=0.47143667936325073, z=0.07221901416778564), orientation=geometry_msgs.msg.Quaternion(x=-0.017774265259504318, y=-0.002910623326897621, z=0.09005986154079437, w=0.9957734942436218)), covariance=array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0.])), twist=geometry_msgs.msg.TwistWithCovariance(twist=geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=0.00012490495282690972, y=0.0003878145362250507, z=0.0), angular=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.007610774599015713)), covariance=array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0.])))
+
+------------------------------
+
+
+[INFO] [1716974496.324499027] [minimal_subscriber]: I heard:
+nav_msgs.msg.Odometry(header=std_msgs.msg.Header(stamp=builtin_interfaces.msg.Time(sec=1716974496, nanosec=319316046), frame_id='odom'), child_frame_id='base_link', pose=geometry_msgs.msg.PoseWithCovariance(pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.5782625675201416, y=0.47143667936325073, z=0.07221901416778564), orientation=geometry_msgs.msg.Quaternion(x=-0.017774265259504318, y=-0.002910623326897621, z=0.09005986154079437, w=0.9957734942436218)), covariance=array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0.])), twist=geometry_msgs.msg.TwistWithCovariance(twist=geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=0.00012490495282690972, y=0.0003878145362250507, z=0.0), angular=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.007610774599015713)), covariance=array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0.])))
+
+------------------------------
+
+
+[INFO] [1716974496.368084147] [minimal_subscriber]: I heard:
+nav_msgs.msg.Odometry(header=std_msgs.msg.Header(stamp=builtin_interfaces.msg.Time(sec=1716974496, nanosec=360271877), frame_id='odom'), child_frame_id='base_link', pose=geometry_msgs.msg.PoseWithCovariance(pose=geometry_msgs.msg.Pose(position=geometry_msgs.msg.Point(x=0.5782625675201416, y=0.47143667936325073, z=0.07221901416778564), orientation=geometry_msgs.msg.Quaternion(x=-0.017774265259504318, y=-0.002910623326897621, z=0.09005986154079437, w=0.9957734942436218)), covariance=array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0.])), twist=geometry_msgs.msg.TwistWithCovariance(twist=geometry_msgs.msg.Twist(linear=geometry_msgs.msg.Vector3(x=0.00012490495282690972, y=0.0003878145362250507, z=0.0), angular=geometry_msgs.msg.Vector3(x=0.0, y=0.0, z=0.007610774599015713)), covariance=array([0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+       0., 0.])))
+
+------------------------------

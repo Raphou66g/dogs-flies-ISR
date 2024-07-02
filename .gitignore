@@ -3,5 +3,6 @@ build*/
 install*/
 log*/
 venv*/
-test*/
+#test*/
 .idea*/
+crashtest.py

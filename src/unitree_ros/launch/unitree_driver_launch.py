@@ -32,7 +32,7 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "wifi",
-                default_value="false",
+                default_value="true",
                 description="Uses the wifi IP for communicating with the robot",
             ),
             OpaqueFunction(function=launch_unitree_driver),
