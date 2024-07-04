@@ -77,6 +77,7 @@ class EnvironController:
 
     def __init__(self, flyers: list[dict]):
         self.flyers = [DroneController(**flyer) for flyer in flyers]
+        self.flyers.sort(key=lambda flyer: flyer.drone_number)
         self.flyers_status = [False for _ in flyers]
         self.threads: list[Thread] = []
         self.alive: int = len(self.threads)
