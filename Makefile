@@ -1,4 +1,4 @@
-.PHONY: clean build src
+.PHONY: clean build src firmware
 
 SHELL := /bin/bash
 
@@ -9,6 +9,10 @@ clean:
 	rm -rf ./build/ ./install/ ./log/
 
 build:
-	colcon build --symlink-install
+	colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+
+firmware:
+	export PYTHONPATH=./utils/crazyflie-firmware/build:$PYTHONPATH
+
 
 rebuild: clean build src

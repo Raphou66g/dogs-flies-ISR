@@ -1,7 +1,8 @@
 import sys, select
 import numpy as np
+from time import sleep
 
-from threading import Thread
+from threading import Thread, Lock
 from drone_controller import DroneController
 from position import Position
 
@@ -19,13 +20,20 @@ from geometry_msgs.msg import (
     Vector3,
 )
 
-def is_number(s:str):
+
+def is_number(s: str):
+    """_summary_
+
+    :param s: (str) input String
+
+    
+    :return: (boolean) the String is an number or not
+    """
     try:
         float(s)
         return True
     except ValueError:
         return False
-
 
 
 class MinimalSubscriber(Node):
@@ -38,10 +46,12 @@ class MinimalSubscriber(Node):
         self.subscription = self.create_subscription(
             Odometry, "odom", self.listener_callback, 10
         )
-        self.subscription  # prevent unused variable warning
 
     def listener_callback(self, msg: Odometry):
-        # self.get_logger().info(f'I heard:\n{msg}\n\n------------------------------\n\n')
+        """Action at the reception of a ROS2 message
+
+        :param msg: (Odometry) message received from the GO1
+        """
         poseWC: PoseWithCovariance = msg.pose
         pose: Pose = poseWC.pose
         self.pos.x, self.pos.y, self.pos.z = (
@@ -54,20 +64,23 @@ class MinimalSubscriber(Node):
         # twist: Twist = twistWC.twist
         # self.twistL = twist.linear
         # self.twistA = twist.angular
-        print(self.pos, self.orient) #, self.twistL, self.twistA)
+        print(self.pos, self.orient)  # , self.twistL, self.twistA)
 
 
-class GameController:
+class EnvironController:
     """
     This class controls the whole volleyball game scenario, from ball projection to sending instructions to drones.
 
     :param flyers: (list) A list of dicts representing the drones (flyers).
     """
 
-    def __init__(self, flyers:list[dict]):
+    def __init__(self, flyers: list[dict]):
         self.flyers = [DroneController(**flyer) for flyer in flyers]
+        self.flyers.sort(key=lambda flyer: flyer.drone_number)
         self.flyers_status = [False for _ in flyers]
-        self.threads:list[Thread] = []
+        self.threads: list[Thread] = []
+        self.alive: int = len(self.threads)
+        self.lock = Lock()
 
     def start_drones(self):  # CORE
         """
@@ -77,23 +90,21 @@ class GameController:
         for flyer in self.flyers:
             self.threads.append(Thread(target=flyer.main).start())
 
-    def alive_flyers(self):
-        trash:list[Thread] = []
-        count = 0
-        if len(self.threads) == 0:
-            return 0
-        for th in self.threads:
-            count+=1 if th.is_alive() else trash.append(th)
-        if not len(trash) == 0:
-            for th in trash:
-                self.threads.remove()
-        return count
+    def alive_flyers(self, duration: float = 5):
+        """
+        Auto verify if a drone is missing and autoremove it from the thread list.
+        """
+        while True:
+            sleep(duration)
+
+            with self.lock:
+                self.threads = [thread for thread in self.threads if thread.is_alive()]
+                self.alive = len(self.threads)
 
     def stop_drones(self):  # CORE
         """
         Stops all the flyers by telling the drones to land.
         """
-
         for flyer in self.flyers:
             flyer.land_now = True
 
@@ -156,13 +167,14 @@ class GameController:
 
         return coord
 
-    def main(self, mode:int=1, args=None):
-        """
-        TODO
-        
+    def main(self, mode: int = 1, args=None):
+        """Core of the environment controller
+
+        :param mode: (int, optional) Chose between ROS mode (1) and manual mode (2). Defaults to 1.
+        :param args: (_type_, optional) _description_. Defaults to None.
         """
 
-        if mode == 0 :
+        if mode == 0:
             return
 
         # ROS2 init
@@ -179,17 +191,21 @@ class GameController:
             while True:
                 if mode == 1:
                     rclpy.spin_once(minimal_subscriber, timeout_sec=0.1)
-                    
-                else :
-                    print("enter X Y Z coords split with space. Floats allowed with . separator")
-                    print(f"Actual coordinates : {minimal_subscriber.pos}")
-                    i, _, _ = select.select( [sys.stdin], [], [], 10 )
 
-                    if (i):
+                else:
+                    print(
+                        "enter X Y Z coords split with space. Floats allowed with . separator"
+                    )
+                    print(f"Actual coordinates : {minimal_subscriber.pos}")
+                    i, _, _ = select.select([sys.stdin], [], [], 10)
+
+                    if i:
                         try:
                             coords = sys.stdin.readline().strip().split(" ")
-                            if len(coords) != 3 :
-                                raise ValueError(f"Wrong number of parameters. Need exactly 3 and got {len(coords)}")
+                            if len(coords) != 3:
+                                raise ValueError(
+                                    f"Wrong number of parameters. Need exactly 3 and got {len(coords)}"
+                                )
                             for c in coords:
                                 if not is_number(c):
                                     raise ValueError(f"{c} is not a valid number")
@@ -198,10 +214,9 @@ class GameController:
                             minimal_subscriber.pos.z = float(coords[2])
                         except Exception as e:
                             print("Warning : " + e)
-                        
 
-                form_coords = self.formation(len(self.alive_flyers()), minimal_subscriber.pos)
-                    # print([str(form_coords[i]) for i in range(len(form_coords))])
+                with self.lock:
+                    form_coords = self.formation(self.alive, minimal_subscriber.pos)
 
                 # Send drone to the position
                 for flyer, coord in zip(self.flyers, form_coords):
@@ -226,9 +241,10 @@ if __name__ == "__main__":
 
         :return: List of dicts representing drone settings.
         """
-        with open('drones.json', 'r') as f:
+        with open("drones.json", "r") as f:
             drones = json.load(f)
         return drones
-    
+
     drones = load_drones_settings()
-    GameController(drones).main(mode=1)
+    EnvironController(drones).main(mode=1)
+

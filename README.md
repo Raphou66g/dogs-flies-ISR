@@ -8,7 +8,8 @@
   - [🪰 Crazyflies](#dependencies-flies)
 - [From scratch](#scratch)
 - [⌨️ Initialization](#initialization)
-
+  - [🐕 Go1](#initialization-go1)
+  - [🪰 Crazyflies](#initialization-flies)
 
 ## 📰 Sources <a id="sources"></a>
 
@@ -61,7 +62,19 @@ The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo came
 
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
 
-TBD
+The prerequisites are :
+  - At least 1 Crazyflie 2.1 or more
+  - 1 Crazyradio PA
+  - Ros 2 Humble installed
+
+This part requires the Crazyswarm2 API. Follow this link for more information: https://imrclab.github.io/crazyswarm2/installation.html
+
+> [!WARNING]  
+> You can skip steps 3 & 4 of the tutorial because the ROS 2 workspace is this folder
+
+Please refers to steps 1, 2 & 5 to 7
+
+To use simulation, optional point 7 is no longer optional.
 
 ## From scratch <a id="scratch"></a>
 
@@ -148,7 +161,8 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 
     If every step has been done correctly, while using `df /` in a terminal, you should be able to see <YOUR_STORAGE> as your filesystem.
 
-    Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
+  > [!CAUTION]  
+  > Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
 
 
 - You can then install the JetPack SDK :
@@ -162,15 +176,36 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 ## ⌨️ Initialization <a id="initialization"></a>
 
 - Place yourself in the `/drone-flies-ISR` folder.
-- `colcon build --symlink-install`
+- `colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release`
+
+### 🐕 GO1 <a id="initialization-go1"></a>
+
 - Power up the Unitree Go1.
 - If you can't wire your PC to the Go1 via Ethernet, connect the former to the 5GHz network named `Unitree_Go*******`. The default password is 00000000.
 - Then, input the following command to launch the driver :
 ```bash
-ros2 launch unitree_ros unitree_driver_launch.py # add wifi:=true if using WiFi
+ros2 launch unitree_ros unitree_driver_launch.py 
 ```
+
+> [!NOTE]  
+> Add `wifi:=true` if using WiFi
+
 - The Go1 should stand up. You can now send ROS2 nodes to it.
 - For example, test the following node, which should make the Go1 move forward by 2 meters : 
 ```bash
 ros2 run unitree_ros DriverNode.py
 ```
+
+### 🪰 Crazyflies <a id="initialization-flies"></a>
+
+Plug the Crazyradio to an USB port.
+
+You can test the sim with the following command line :
+
+```bash
+ros2 launch crazyflie_examples launch.py script:=hello_world backend:=sim
+```
+
+The specific scripts are `form_goto`, which moves the drone formation to different locations, and `form_ros2`, which waits for the coordinates of a specific ros topic (`modo` backwards from 'odom').
+
+The next step, which has not yet been tested, is to switch from the sim backend to cflib and take control of the real Crazyflies.
