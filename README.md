@@ -63,18 +63,22 @@ The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo came
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
 
 The prerequisites are :
-  - At least 1 Crazyflie 2.1 or more
+  - At least 1 Crazyflie 2.1 or more (Not used in simulation)
   - 1 Crazyradio PA
   - Ros 2 Humble installed
 
-This part requires the Crazyswarm2 API. Follow this link for more information: https://imrclab.github.io/crazyswarm2/installation.html
+This part requires the Crazyswarm2 API. You can either run the `crazyswarm.sh` script or follow this tutorial for more informations : https://imrclab.github.io/crazyswarm2/installation.html
 
 > [!WARNING]  
-> You can skip steps 3 & 4 of the tutorial because the ROS 2 workspace is this folder
+> Please refer to steps 1, 2 and 5 to 7.  
+> If you follow the tutorial, you can skip steps 3 and 4, as the ROS 2 workspace is already this workspace.  
+> To use simulation, option point 7 is no longer optional.  
 
-Please refers to steps 1, 2 & 5 to 7
-
-To use simulation, optional point 7 is no longer optional.
+> [!TIP]  
+> For the simulation, make sure that the command  
+> `export PYTHONPATH=<replace-with-path-to>/crazyflie-firmware/build:$PYTHONPATH`  
+> has been executed at least once after each machine reboot.
+> Refers to step 7 for more information.
 
 ## From scratch <a id="scratch"></a>
 
@@ -198,7 +202,7 @@ ros2 run unitree_ros DriverNode.py
 
 ### 🪰 Crazyflies <a id="initialization-flies"></a>
 
-Plug the Crazyradio to an USB port.
+Don't forget to plug the Crazyradio to an USB port.
 
 You can test the sim with the following command line :
 
@@ -206,6 +210,13 @@ You can test the sim with the following command line :
 ros2 launch crazyflie_examples launch.py script:=hello_world backend:=sim
 ```
 
-The specific scripts are `form_goto`, which moves the drone formation to different locations, and `form_ros2`, which waits for the coordinates of a specific ros topic (`modo` backwards from 'odom').
+The specific scripts are `form_goto`, which moves the drone formation to different locations, and `form_ros2`, which waits for the coordinates of a specific ros subject (the `odom` topic).
+
+To send different coordinates to the `form_ros2` script, you can run the `send_coords.py` file located in `src/crazyswarm2/crazyflie_examples/crazyflie_examples/send_coords.py` along with the other scripts or you can move the Go1 after connecting it using [those instructions](#initialization-go1).
+
+> [!IMPORTANT]  
+> The origin and orientation of the Go1 depend on where it is placed at power-up.  
+> The X axis is in front of him and the Y axis to his left.  
+> Standing up, the position is not really 0,0
 
 The next step, which has not yet been tested, is to switch from the sim backend to cflib and take control of the real Crazyflies.
