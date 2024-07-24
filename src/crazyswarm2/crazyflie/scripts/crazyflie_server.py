@@ -891,7 +891,7 @@ class CrazyflieServer(Node):
             upload_success_all = True
             for link_uri in self.uris:
                 trajectory_mem = self.swarm._cfs[link_uri].cf.mem.get_mems(
-                    MemoryElement.TYPE_TRAJ)[id]
+                    MemoryElement.TYPE_TRAJ)[0]
                 trajectory_mem.trajectory = trajectory
                 upload_result = trajectory_mem.write_data_sync()
                 if not upload_result:
@@ -905,7 +905,7 @@ class CrazyflieServer(Node):
                 return response
         else:
             trajectory_mem = self.swarm._cfs[uri].cf.mem.get_mems(
-                MemoryElement.TYPE_TRAJ)[id]
+                MemoryElement.TYPE_TRAJ)[0]
             trajectory_mem.trajectory = trajectory
             upload_result = trajectory_mem.write_data_sync()
             if not upload_result:

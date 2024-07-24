@@ -6,7 +6,7 @@ from .utils import formation, MinimalSubscriber
 
 
 TAKEOFF_DURATION = 2.5
-HOVER_DURATION = 2.5
+HOVER_DURATION = 1.0
 
 
 def main():
@@ -24,7 +24,7 @@ def main():
             form_coords = formation(len(allcfs.crazyflies), pos)
 
             for cf, coords in zip(allcfs.crazyflies, form_coords):
-                cf.goTo(coords.array(), 0, 2.5)
+                cf.goTo(coords.array(), 0, 1.0)
             
             time_helper.sleep(HOVER_DURATION)
 
