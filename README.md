@@ -165,8 +165,8 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 
     If every step has been done correctly, while using `df /` in a terminal, you should be able to see <YOUR_STORAGE> as your filesystem.
 
-  > [!CAUTION]  
-  > Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
+> [!CAUTION]  
+> Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
 
 
 - You can then install the JetPack SDK :
