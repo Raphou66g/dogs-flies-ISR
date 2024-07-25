@@ -179,7 +179,7 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 
 ## ⌨️ Initialization <a id="initialization"></a>
 
-- Place yourself in the `/drone-flies-ISR` folder.
+- Place yourself in the `/dogs-flies-ISR` folder.
 - `colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release`
 
 ### 🐕 GO1 <a id="initialization-go1"></a>
@@ -203,6 +203,17 @@ ros2 run unitree_ros DriverNode.py
 ### 🪰 Crazyflies <a id="initialization-flies"></a>
 
 Don't forget to plug the Crazyradio to an USB port.
+
+You can modify the number of drones and their configuration by editing the file `src/crazyswarm2/crazyflie/config/crazyflies.yaml`.
+
+```yaml
+robots:
+  cf2:  # Label of the drone
+    enabled: true  # Enable or not
+    uri: radio://0/125/2M/E7E7E7E702  # Radio address of the drone. The last 2 digits are the id of the drone
+    initial_position: [0.0, 0.0, 0.0] # x,y,z. Must be floats
+    type: cf21  # see robot_types
+```
 
 You can test the sim with the following command line :
 
