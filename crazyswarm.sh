@@ -19,8 +19,7 @@ sudo usermod -a -G plugdev $USER
 cd ~
 git clone --recursive https://github.com/bitcraze/crazyflie-firmware.git
 
-cd -
-cd ~/crazyflie-firmware
+cd crazyflie-firmware
 
 sudo apt install swig
 
@@ -30,6 +29,3 @@ cd build
 python3 setup.py install --user
 
 export PYTHONPATH=~/crazyflie-firmware/build:$PYTHONPATH
-
-cd -
-unzip -o src.zip

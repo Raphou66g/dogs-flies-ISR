@@ -48,11 +48,11 @@
     ```
 
 
-### 🐕 GO1 <a id="dependencies-go1"></a>
+### 🐕 GO1 <a id="dependencies-go1"></a> *(outdated)*
 
 No specific dependencies other than the ones above.
 
-#### Jetson Nano & ZED mini <a id="jetson"></a>
+#### Jetson Nano & ZED mini <a id="jetson"></a> *(outdated)*
 
 The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo camera, which we connected to a Jetson Nano. The whole system will be wrapped on the Go1's back.
 
@@ -64,7 +64,7 @@ The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo came
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
 
 The prerequisites are :
-  - At least 1 Crazyflie 2.1 or more (Not used in simulation)
+  - At least 1 Crazyflie 2.1 or more (None if simulation is used)
   - 1 Crazyradio PA
   - Ros 2 Humble installed
 
@@ -87,7 +87,7 @@ This part requires the Crazyswarm2 API. You can either run the `crazyswarm.sh` s
 
 Other people have been working with the Go1 and we don't know if they have modified its code, but we suppose it should work properly even after a factory reset.
 
-### Flashing and configuring the Jetson Nano
+### Flashing and configuring the Jetson Nano *(outdated)*
 
 The following steps have been done on Ubuntu 18.04. It should work with more recent versions but to avoid any problems we recommend using the same Ubuntu version.
 
@@ -180,9 +180,13 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 
 ## ⌨️ Initialization <a id="initialization"></a>
 
-- use `git clone --recursive https://github.com/Raphou66g/dogs-flies-ISR`
-- Place yourself in the `/dogs-flies-ISR` folder.
-- `colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release`
+```bash
+git clone --recursive https://github.com/Raphou66g/dogs-flies-ISR
+cd dogs-flies-ISR
+sh crazyswarm.sh
+unzip -o src.zip
+make build
+```
 
 ### 🐕 GO1 <a id="initialization-go1"></a>
 
@@ -225,7 +229,13 @@ ros2 launch crazyflie_examples launch.py script:=hello_world backend:=sim
 
 The specific scripts are `form_goto`, which moves the drone formation to different locations, and `form_ros2`, which waits for the coordinates of a specific ros subject (the `odom` topic).
 
+```bash
+ros2 launch crazyflie_examples launch.py script:=form_ros2 backend:=sim
+```
+
 To send different coordinates to the `form_ros2` script, you can run the `send_coords.py` file located in `src/crazyswarm2/crazyflie_examples/crazyflie_examples/send_coords.py` along with the other scripts or you can move the Go1 after connecting it using [those instructions](#initialization-go1).
+
+Delays are to be expected between the movement of the Go1 (or the sending of coordinates) and the movement of the drone.
 
 > [!IMPORTANT]  
 > The origin and orientation of the Go1 depend on where it is placed at power-up.  

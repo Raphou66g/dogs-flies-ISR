@@ -13,7 +13,7 @@ firmware:
 
 build:
 	colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
+	source install/setup.sh
 	export PYTHONPATH=~/crazyflie-firmware/build:$PYTHONPATH
-
 
 rebuild: clean build src
