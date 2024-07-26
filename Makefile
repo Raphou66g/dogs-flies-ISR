@@ -8,11 +8,12 @@ src:
 clean:
 	rm -rf ./build/ ./install/ ./log/
 
+firmware:
+	export PYTHONPATH=~/crazyflie-firmware/build:$PYTHONPATH
+
 build:
 	colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
-
-firmware:
-	export PYTHONPATH=./utils/crazyflie-firmware/build:$PYTHONPATH
+	export PYTHONPATH=~/crazyflie-firmware/build:$PYTHONPATH
 
 
 rebuild: clean build src
