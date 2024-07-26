@@ -1,5 +1,6 @@
 # drone-flies-ISR
 
+
 - [📰 Sources](#sources)
 - [🛠️ Dependencies](#dependencies)
   - [General](#dependencies-general)
@@ -179,6 +180,7 @@ The entire process can be found [here](./docs/Auvidea_Software.pdf).
 
 ## ⌨️ Initialization <a id="initialization"></a>
 
+- use `git clone --recursive https://github.com/Raphou66g/dogs-flies-ISR`
 - Place yourself in the `/dogs-flies-ISR` folder.
 - `colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release`
 

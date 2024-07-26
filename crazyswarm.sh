@@ -18,4 +18,15 @@ sudo usermod -a -G plugdev $USER
 # Set up software-in-the-loop simulation
 cd
 git clone --recursive https://github.com/bitcraze/crazyflie-firmware.git
+cd crazyflie-firmware
+
+sudo apt install swig
+
+make cf2_defconfig
+make bindings_python
+cd build
+python3 setup.py install --user
+
 export PYTHONPATH=~/crazyflie-firmware/build:$PYTHONPATH
+
+cd -
