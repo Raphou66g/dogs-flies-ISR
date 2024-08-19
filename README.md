@@ -188,6 +188,10 @@ unzip -o src.zip
 make build
 ```
 
+> [!NOTE]  
+> If you have any problems during this part, especially with the `crazyswarm.sh` script, you can always copy/paste each command line directly into your terminal.
+
+
 ### 🐕 GO1 <a id="initialization-go1"></a>
 
 - Power up the Unitree Go1.
