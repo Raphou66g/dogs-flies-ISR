@@ -7,10 +7,12 @@
   - [🐕 Go1](#dependencies-go1)
     - [Jetson Nano & ZED mini](#jetson)
   - [🪰 Crazyflies](#dependencies-flies)
+  - [🚁 PX4 Vision](#️dependencies-px4)
 - [From scratch](#scratch)
 - [⌨️ Initialization](#initialization)
   - [🐕 Go1](#initialization-go1)
   - [🪰 Crazyflies](#initialization-flies)
+  - [🚁 PX4 Vision](#initialization-px4)
 
 ## 📰 Sources <a id="sources"></a>
 
@@ -48,18 +50,18 @@
     ```
 
 
-### 🐕 GO1 <a id="dependencies-go1"></a> *(outdated)*
+### 🐕 GO1 <a id="dependencies-go1"></a>
 
 No specific dependencies other than the ones above.
 
-#### Jetson Nano & ZED mini <a id="jetson"></a> *(outdated)*
+#### Jetson Orin Nano & ZED mini <a id="jetson"></a>
 
-The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo camera, which we connected to a Jetson Nano. The whole system will be wrapped on the Go1's back.
+The Go1's cameras aren't suited for SLAM, so we opted for a ZED Mini stereo camera, which we connected to a Jetson Orin Nano. The whole system will be wrapped on the Go1's back.
 
-- The JN30D carrier board's firmware :
-  - [Mega](https://mega.nz/file/2YknhI6A#5s0Zr9UmwSfbIX-MFVpjSrUjrLEhWtQTiXN13qAWELM) | [Original Download Link](https://f000.backblazeb2.com/file/auvidea-download/images/Jetpack_4_6/BSP/Jetpack4.6_Nano_BSP.tar.gz)
+- NVIDIA SDK Manager :
+  - [Download Link](https://developer.nvidia.com/sdk-manager)
 - ZED SDK :
-  - [Mega](https://mega.nz/file/HU1wSbxJ#px-IquGm5MQEqtKCeBQiUl40IVINUzJb41PFfCNexSk) | [Original Download Link](https://download.stereolabs.com/zedsdk/3.8/l4t32.6/jetsons)
+  - [Download Link](https://download.stereolabs.com/zedsdk/4.1/l4t36.3/jetsons)
 
 ### 🪰 Crazyflies <a id="dependencies-flies"></a>
 
@@ -81,101 +83,27 @@ This part requires the Crazyswarm2 API. You can either run the `crazyswarm.sh` s
 > has been executed at least once after each machine reboot.
 > Refers to step 7 for more information.
 
+### 🚁 PX4 Vision <a id="dependencies-px4"></a>
+
+This section is in an early state.
+
+All you need for now are a PX4 Vision drone Kit, a WiFi connection and some Python libraries :
+
+```bash
+pip3 install mavsdk
+```
+
 ## From scratch <a id="scratch"></a>
 
 ### GO1
 
 Other people have been working with the Go1 and we don't know if they have modified its code, but we suppose it should work properly even after a factory reset.
 
-### Flashing and configuring the Jetson Nano *(outdated)*
+### Flashing and configuring the Jetson Orin Nano
 
-The following steps have been done on Ubuntu 18.04. It should work with more recent versions but to avoid any problems we recommend using the same Ubuntu version.
+We recommand you to use the [NVIDIA SDK Manager](https://developer.nvidia.com/sdk-manager) and simply following the steps.
 
-The entire process can be found [here](./docs/Auvidea_Software.pdf). 
-
-> [!WARNING]  
-> There are mistakes in this file which we will address below.
-
-- First, you need to flash the Jetson Nano.
-
-  Download the Jetson's firmware. It can be found above ([here](#jetson)).
-
-  Then, setup your Jetson to be in recovery mode, connect it to your computer and then run the downloaded file.
-
-  ```bash
-  sudo bash ./flashcmd.txt
-  ```
-
-- If your Jetson has an external storage like ours (in our case, a microSD), we recommend to use it and make the Jetson boot on it by following the "SECTION 5" on Auvidea's PDF.
-  - Follow SECTION 5.1.2 on [Auvidea's guide](./docs/Auvidea_Software.pdf)
-
-    In our case, we got : 
-    
-    **<YOUR_STORAGE>** = `/dev/mmcblk1p1`
-    
-    **<YOUR_STORAGE_DEVICE>** = `/dev/mmcblk1` (remove the `1` or `p1` or any number at the end)
-
-    **<YOUR_STORAGE_PREFIX>** = `p1` (or whatever you removed earlier)
-
-  - Set up RootFS on SSD
-
-    1. Format the storage device
-
-        ```bash
-        sudo parted <YOUR_STORAGE_DEVICE> mklabel gpt
-        ```
-
-    2. Create the RootFS partition
-
-        ```bash
-        sudo parted <YOUR_STORAGE_DEVICE> mkpart APP 0GB
-        ```
-
-        When parted asks for the end of the partition, input `100%` if you want to use the whole storage.
-
-    3. Create filesystem
-
-        ```bash
-        sudo mkfs.ext4 <YOUR_STORAGE>
-        ```
-
-    4. Copy the existing RootFS to the storage device.
-
-        ```bash
-        sudo mount <YOUR_STORAGE> /mnt
-        sudo rsync -axHAWX --numeric-ids --info=progress2 --exclude={"/dev/","/proc/","/sys/","/tmp/","/run/","/mnt/","/media/*","/lost+found"} / /mnt/
-        ```
-  - Switch boot device to the external device
-
-    5. Modify the extlinux.conf by changing the root path
-
-        ```bash
-        sudo nano /boot/extlinux/extlinux.conf
-        ```
-
-        Then, locate the `LABEL primary` line and **ONLY** change the root path with `<YOUR_STORAGE>` :
-
-        ```
-        LABEL primary 
-          MENU LABEL primary kernel
-          LINUX /boot/Image
-          INITRD /boot/initrd 
-          APPEND ${cbootargs} quiet root=<YOUR_STORAGE> rw rootwait rootfstype=ext4 console=ttyTCU0,115200n8 console=tty0 fbcon=map:0 net.ifnames=0
-        ```
-  - Reboot the Jetson.
-
-    If every step has been done correctly, while using `df /` in a terminal, you should be able to see <YOUR_STORAGE> as your filesystem.
-
-> [!CAUTION]  
-> Auvidea <font color='red'>**recommends to not use**</font> `apt upgrade` on the Jetson as it could break some of its functionalities. 
-
-
-- You can then install the JetPack SDK :
-
-  ```bash
-  sudo apt update
-  sudo apt install nvidia-jetpack
-  ```
+When the manager ask for the card type, in our case, we choose the __Orin Nano 8Go (Developper Kit)__
 
 
 ## ⌨️ Initialization <a id="initialization"></a>
@@ -247,3 +175,9 @@ Delays are to be expected between the movement of the Go1 (or the sending of coo
 > Standing up, the position is not really 0,0
 
 The next step, which has not yet been tested, is to switch from the sim backend to cflib and take control of the real Crazyflies.
+
+### 🚁 PX4 Vision <a id="initialization-px4"></a>
+
+This section is in an early state.
+
+This part is still under developpement.
