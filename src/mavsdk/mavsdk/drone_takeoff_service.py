@@ -5,6 +5,7 @@ import rclpy
 from rclpy.node import Node
 from std_srvs.srv import Empty
 
+
 class DroneTakeoffService(Node):
     def __init__(self):
         super().__init__('drone_takeoff_service')
@@ -12,7 +13,7 @@ class DroneTakeoffService(Node):
 
     async def takeoff(self):
         drone = System()
-        await drone.connect(system_address="udp://:14550") # Change addr
+        await drone.connect(system_address="udp://:14550")  # Change addr
 
         print("Waiting for drone...")
         async for state in drone.core.connection_state():
@@ -38,14 +39,13 @@ class DroneTakeoffService(Node):
         asyncio.create_task(self.takeoff())
         return response
 
+
 def main(args=None):
     rclpy.init(args=args)
-
     drone_takeoff_service = DroneTakeoffService()
-
     rclpy.spin(drone_takeoff_service)
-
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()

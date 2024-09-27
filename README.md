@@ -17,7 +17,7 @@
 ## 📰 Sources <a id="sources"></a>
 
 - GO1 :
-  - [x] **<https://github.com/snt-arg/unitree_ros>** (The most recent depot working extremly well. We'll base our work on this)
+  - [x] **<https://github.com/snt-arg/unitree_ros>** (The most recent depot working extremely well. We'll base our work on this)
   - [ ] <https://www.youtube.com/watch?v=YSedTUxI0wc&ab_channel=DroneBlocks>
     - <https://gist.github.com/dbaldwin/feb0d279c67e0bcb191d2b366f867a84>
     - <https://community.droneblocks.io/t/go1-development-with-ros2-c-and-python/679/4>
@@ -70,7 +70,7 @@ The prerequisites are :
   - 1 Crazyradio PA
   - Ros 2 Humble installed
 
-This part requires the Crazyswarm2 API. You can either run the `crazyswarm.sh` script or follow this tutorial for more informations : https://imrclab.github.io/crazyswarm2/installation.html
+This part requires the Crazyswarm2 API. You can either run the `crazyswarm.sh` script or follow this tutorial for more information : https://imrclab.github.io/crazyswarm2/installation.html
 
 > [!WARNING]  
 > Please refer to steps 1, 2 and 5 to 7.  
@@ -87,7 +87,7 @@ This part requires the Crazyswarm2 API. You can either run the `crazyswarm.sh` s
 
 This section is in an early state.
 
-All you need for now are a PX4 Vision drone Kit, a WiFi connection and some Python libraries :
+All you need for now are a PX4 Vision drone Kit, a Wi-Fi connection and some Python libraries :
 
 ```bash
 pip3 install mavsdk
@@ -101,9 +101,9 @@ Other people have been working with the Go1 and we don't know if they have modif
 
 ### Flashing and configuring the Jetson Orin Nano
 
-We recommand you to use the [NVIDIA SDK Manager](https://developer.nvidia.com/sdk-manager) and simply following the steps.
+We recommend you to use the [NVIDIA SDK Manager](https://developer.nvidia.com/sdk-manager) and simply following the steps.
 
-When the manager ask for the card type, in our case, we choose the __Orin Nano 8Go (Developper Kit)__
+When it asks for the card type, in our case, we choose the __Orin Nano 8Go (Developer Kit)__
 
 
 ## ⌨️ Initialization <a id="initialization"></a>
@@ -130,7 +130,7 @@ ros2 launch unitree_ros unitree_driver_launch.py
 ```
 
 > [!NOTE]  
-> Add `wifi:=true` if using WiFi
+> Add `wifi:=true` if using Wi-Fi
 
 - The Go1 should stand up. You can now send ROS2 nodes to it.
 - For example, test the following node, which should make the Go1 move forward by 2 meters : 
@@ -140,7 +140,7 @@ ros2 run unitree_ros DriverNode.py
 
 ### 🪰 Crazyflies <a id="initialization-flies"></a>
 
-Don't forget to plug the Crazyradio to an USB port.
+Don't forget to plug the Crazyradio to a USB port.
 
 You can modify the number of drones and their configuration by editing the file `src/crazyswarm2/crazyflie/config/crazyflies.yaml`.
 
@@ -165,7 +165,7 @@ The specific scripts are `form_goto`, which moves the drone formation to differe
 ros2 launch crazyflie_examples launch.py script:=form_ros2 backend:=sim
 ```
 
-To send different coordinates to the `form_ros2` script, you can run the `send_coords.py` file located in `src/crazyswarm2/crazyflie_examples/crazyflie_examples/send_coords.py` along with the other scripts or you can move the Go1 after connecting it using [those instructions](#initialization-go1).
+To send different coordinates to the `form_ros2` script, you can run the `send_coords.py` file located in `src/crazyswarm2/crazyflie_examples/crazyflie_examples/send_coords.py` along with the other scripts, or you can move the Go1 after connecting it using [those instructions](#initialization-go1).
 
 Delays are to be expected between the movement of the Go1 (or the sending of coordinates) and the movement of the drone.
 
@@ -178,6 +178,8 @@ The next step, which has not yet been tested, is to switch from the sim backend 
 
 ### 🚁 PX4 Vision <a id="initialization-px4"></a>
 
-This section is in an early state.
+This section is in an early state.\
+This part is still under development.
 
-This part is still under developpement.
+
+
