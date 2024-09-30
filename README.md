@@ -7,7 +7,7 @@
   - [🐕 Go1](#dependencies-go1)
     - [Jetson Nano & ZED mini](#jetson)
   - [🪰 Crazyflies](#dependencies-flies)
-  - [🚁 PX4 Vision](#️dependencies-px4)
+  - [🚁 PX4 Vision](#dependencies-px4)
 - [From scratch](#scratch)
 - [⌨️ Initialization](#initialization)
   - [🐕 Go1](#initialization-go1)
@@ -30,6 +30,12 @@
 
 - Crazyflies :
   - <https://github.com/IMRCLab/crazyswarm2>
+ 
+- PX4 Vision
+  - <https://docs.px4.io/main/en/complete_vehicles_mc/px4_vision_kit.html>
+  - <https://mavsdk.mavlink.io/main/en/>
+  - <https://github.com/mavlink/MAVSDK-Python/tree/main>
+  - <http://mavsdk-python-docs.s3-website.eu-central-1.amazonaws.com/#>
 
 ## 🛠️ Dependencies <a id="dependencies"></a>
 
@@ -174,7 +180,11 @@ Delays are to be expected between the movement of the Go1 (or the sending of coo
 > The X axis is in front of him and the Y axis to his left.  
 > Standing up, the position is not really 0,0
 
-The next step, which has not yet been tested, is to switch from the sim backend to cflib and take control of the real Crazyflies.
+The next step, is to switch from the sim backend to cflib and take control of the real Crazyflies.\
+It is possible by changing the `backend:=sim` to `backend:=cflib` in the command line like the following :
+```bash
+ros2 launch crazyflie_examples launch.py script:=form_ros2 backend:=cflib
+```
 
 ### 🚁 PX4 Vision <a id="initialization-px4"></a>
 
