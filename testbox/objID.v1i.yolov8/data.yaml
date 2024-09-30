@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 3
+names: ['blue', 'orange', 'tennis']
+
+roboflow:
+  workspace: dogsfliesisr
+  project: objid
+  version: 1
+  license: MIT
+  url: https://universe.roboflow.com/dogsfliesisr/objid/dataset/1
